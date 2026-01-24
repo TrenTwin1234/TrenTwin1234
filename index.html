@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeaRent — Аренда яхт и катеров</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-ship"></i>
+                <span>SeaRent</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#yachts">Каталог яхт</a></li>
+                <li><a href="#features">Преимущества</a></li>
+                <li><a href="#how-it-works">Как это работает</a></li>
+                <li><a href="#testimonials">Отзывы</a></li>
+                <li><a href="#owners" class="cta-button">Владельцам яхт</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+        
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Аренда яхт и катеров по всему миру</h1>
+            <p>Более 1500 судов для отдыха, рыбалки, праздников и деловых мероприятий. Бронируйте онлайн за 5 минут.</p>
+            
+            <!-- Search Form -->
+            <div class="search-form">
+                <form id="searchForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="location"><i class="fas fa-map-marker-alt"></i> Локация</label>
+                            <select class="form-control" id="location" required>
+                                <option value="">Выберите порт/регион</option>
+                                <option value="sochi">Сочи, Россия</option>
+                                <option value="croatia">Хорватия</option>
+                                <option value="greece">Греция</option>
+                                <option value="thailand">Тайланд</option>
+                                <option value="caribbean">Карибские острова</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dates"><i class="fas fa-calendar-alt"></i> Даты</label>
+                            <input type="text" class="form-control" id="dates" placeholder="Выберите даты" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guests"><i class="fas fa-users"></i> Гости</label>
+                            <select class="form-control" id="guests" required>
+                                <option value="1">1-2 гостя</option>
+                                <option value="2" selected>3-4 гостя</option>
+                                <option value="3">5-8 гостей</option>
+                                <option value="4">9+ гостей</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="yacht-type"><i class="fas fa-ship"></i> Тип судна</label>
+                            <select class="form-control" id="yacht-type">
+                                <option value="">Любой тип</option>
+                                <option value="sailing">Парусная яхта</option>
+                                <option value="motor">Моторная яхта</option>
+                                <option value="catamaran">Катамаран</option>
+                                <option value="boat">Катер</option>
+                                <option value="luxury">Люкс-яхта</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i> Найти яхту
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <!-- Yachts Section -->
+    <section id="yachts">
+        <div class="section-title">
+            <h2>Популярные яхты для аренды</h2>
+            <p>Лучшие предложения этого сезона</p>
+        </div>
+        
+        <div class="yachts-grid" id="yachtsContainer">
+            <!-- Yachts will be loaded dynamically by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-title">
+            <h2>Почему выбирают SeaRent</h2>
+            <p>Мы делаем аренду яхт простой, безопасной и выгодной</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Безопасность и гарантии</h3>
+                <p>Все судна проходят проверку, договоры и страхование включены в стоимость.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>Прозрачный выбор</h3>
+                <p>Детальные описания, реальные фото и отзывы от предыдущих арендаторов.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Поддержка 24/7</h3>
+                <p>Наша команда помогает до, во время и после аренды на всех этапах.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <h3>Лучшая цена</h3>
+                <p>Прямые контракты с владельцами без скрытых комиссий и наценок.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works">
+        <div class="section-title">
+            <h2>Как арендовать яхту</h2>
+            <p>Всего 4 простых шага до вашего морского приключения</p>
+        </div>
+        
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Поиск и выбор</h3>
+                <p>Найдите идеальную яхту с помощью фильтров и проверенных отзывов.</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Бронирование</h3>
+                <p>Забронируйте онлайн или отправьте запрос владельцу. Подтверждение за 24 часа.</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Оплата и документы</h3>
+                <p>Оплатите безопасным способом и получите все документы на email.</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Наслаждайтесь!</h3>
+                <p>Встречайтесь с капитаном в порту и отправляйтесь в путешествие.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-title">
+            <h2>Отзывы наших клиентов</h2>
+            <p>Что говорят арендаторы о своем опыте</p>
+        </div>
+        
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "Арендовали яхту в Сочи на неделю. Все прошло идеально, яхта была в отличном состоянии, капитан опытный. Обязательно воспользуемся сервисом еще!"
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Андрей" class="author-avatar">
+                    <div>
+                        <h4>Андрей Смирнов</h4>
+                        <p>Аренда в Сочи, июль 2023</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "Отмечали свадьбу на яхте в Греции. Организация на высшем уровне, все гости в восторге. Спасибо команде SeaRent за помощь в планировании!"
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Екатерина" class="author-avatar">
+                    <div>
+                        <h4>Екатерина Волкова</h4>
+                        <p>Свадьба в Греции, сентябрь 2023</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <div class="testimonial-text">
+                    "Пользуемся SeaRent уже третий раз для корпоративных мероприятий. Всегда большой выбор, профессиональные владельцы и отличный сервис."
+                </div>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Дмитрий" class="author-avatar">
+                    <div>
+                        <h4>Дмитрий Иванов</h4>
+                        <p>Корпоратив в Хорватии, июнь 2023</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <div class="cta-section" id="owners">
+        <h2>У вас есть яхта или катер?</h2>
+        <p>Присоединяйтесь к нашей платформе и начните зарабатывать на аренде вашего судна</p>
+        <button class="cta-button" id="partnerBtn">
+            Стать партнером
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>SeaRent</h3>
+                <p>Крупнейшая платформа для аренды яхт и катеров. Безопасные сделки, проверенные суда и поддержка 24/7.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Направления</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Черное море</a></li>
+                    <li><a href="#">Средиземное море</a></li>
+                    <li><a href="#">Карибский бассейн</a></li>
+                    <li><a href="#">Юго-Восточная Азия</a></li>
+                    <li><a href="#">Балтийское море</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Компания</h3>
+                <ul class="footer-links">
+                    <li><a href="#">О нас</a></li>
+                    <li><a href="#">Партнерство</a></li>
+                    <li><a href="#">Карьера</a></li>
+                    <li><a href="#">Блог</a></li>
+                    <li><a href="#" id="contactBtn">Контакты</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Помощь</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Центр помощи</a></li>
+                    <li><a href="#">Правила аренды</a></li>
+                    <li><a href="#">Безопасность</a></li>
+                    <li><a href="#">Договор оферты</a></li>
+                    <li><a href="#">Политика конфиденциальности</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> SeaRent. Все права защищены.</p>
+            <p>Телефон: +7 (800) 123-45-67 | Email: info@searent.com</p>
+        </div>
+    </footer>
+
+    <!-- Modal for contact form -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Связаться с нами</h3>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="contactName">Ваше имя</label>
+                    <input type="text" id="contactName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Email</label>
+                    <input type="email" id="contactEmail" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactMessage">Сообщение</label>
+                    <textarea id="contactMessage" class="form-control" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="search-button">Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
