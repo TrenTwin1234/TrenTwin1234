@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>SeaRent | Подбор яхт и бронирование онлайн</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary: #1a6bb3;
+            --primary-dark: #0e4b7f;
+            --secondary: #0a3d62;
+            --accent: #ffb142;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gray: #5d6f7f;
+            --gray-light: #eef2f5;
+            --success: #2ecc71;
+            --error: #e74c3c;
+            --shadow-sm: 0 5px 20px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 30px rgba(0,0,0,0.08);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.12);
+            --radius: 16px;
+            --radius-md: 12px;
+        }
+
+        body {
+            background: #f4f7fc;
+            color: var(--dark);
+        }
+
+        /* header */
+        .results-header {
+            background: linear-gradient(135deg, var(--secondary) 0%, #0f4c6b 100%);
+            color: white;
+            padding: 1.2rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .back-home {
+            background: rgba(255,255,255,0.15);
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .back-home:hover {
+            background: var(--accent);
+            color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* filter bar */
+        .filter-bar {
+            background: white;
+            border-radius: 0 0 var(--radius) var(--radius);
+            margin: 1rem 2rem 0 2rem;
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .filter-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 160px;
+        }
+
+        .filter-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .filter-select, .filter-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            background: var(--light);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .filter-select:focus, .filter-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255,177,66,0.2);
+        }
+
+        .apply-filters {
+            background: var(--primary);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 40px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .apply-filters:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .reset-filters {
+            background: #ecf0f1;
+            color: var(--dark);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        /* yacht grid */
+        .yacht-catalog {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-badge {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 1.8rem;
+        }
+
+        .section-badge h2 {
+            font-size: 1.8rem;
+            color: var(--secondary);
+            font-weight: 700;
+        }
+
+        .result-count {
+            background: var(--gray-light);
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+
+        .yacht-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .yacht-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.25s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .yacht-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .yacht-img-wrapper {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .yacht-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        .yacht-card:hover .yacht-img {
+            transform: scale(1.05);
+        }
+
+        .yacht-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--accent);
+            color: var(--secondary);
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .yacht-info {
+            padding: 1.5rem;
+        }
+
+        .yacht-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.3rem;
+        }
+
+        .yacht-location {
+            color: var(--primary);
+            font-weight: 500;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 0.8rem;
+        }
+
+        .specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-top: 1px solid #edf2f7;
+            padding-top: 0.8rem;
+            margin: 0.8rem 0;
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+
+        .specs i {
+            width: 18px;
+            color: var(--primary);
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.8rem;
+        }
+
+        .price {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .price small {
+            font-size: 0.8rem;
+            font-weight: normal;
+            color: var(--gray);
+        }
+
+        .book-btn {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .book-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.02);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem;
+            background: white;
+            border-radius: var(--radius);
+            color: var(--gray);
+        }
+
+        /* modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-card {
+            background: white;
+            max-width: 500px;
+            width: 90%;
+            border-radius: var(--radius);
+            padding: 2rem;
+            position: relative;
+            animation: fadeUp 0.2s ease;
+        }
+
+        @keyframes fadeUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-card h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 1.5rem;
+            top: 1rem;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .booking-summary {
+            background: var(--gray-light);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin: 1rem 0;
+        }
+
+        .form-modal input, .form-modal textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.6rem 0;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+        }
+
+        .confirm-btn {
+            background: var(--success);
+            color: white;
+            width: 100%;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 40px;
+            font-weight: bold;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 500;
+            z-index: 3000;
+            box-shadow: var(--shadow-md);
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 780px) {
+            .filter-bar { margin: 1rem 1rem 0 1rem; padding: 1rem; }
+            .yacht-catalog { padding: 0 1rem; }
+            .filter-grid { flex-direction: column; }
+            .apply-filters, .reset-filters { width: 100%; justify-content: center; }
+        }
+        footer {
+            background: var(--secondary);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="results-header">
+    <div class="header-container">
+        <div class="logo" onclick="window.location.href='index.html'">
+            <i class="fas fa-ship"></i> <span>SeaRent</span>
+        </div>
+        <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> На главную</a>
+    </div>
+</div>
+
+<!-- фильтры подбора -->
+<div class="filter-bar">
+    <div class="filter-grid">
+        <div class="filter-group">
+            <label><i class="fas fa-map-marker-alt"></i> Локация</label>
+            <select id="filterLocation" class="filter-select">
+                <option value="all">Все порты</option>
+                <option value="Сочи">Сочи, Россия</option>
+                <option value="Хорватия">Хорватия</option>
+                <option value="Греция">Греция</option>
+                <option value="Тайланд">Тайланд</option>
+                <option value="Карибы">Карибские острова</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label><i class="fas fa-ship"></i> Тип судна</label>
+            <select id="filterType" class="filter-select">
+                <option value="all">Любой тип</option>
+                <option value="Парусная">Парусная яхта</option>
+                <option value="Моторная">Моторная яхта</option>
+                <option value="Катамаран">Катамаран</option>
+                <option value="Катер">Катер</option>
+                <option value="Люкс">Люкс-яхта</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label><i class="fas fa-users"></i> Гости (max)</label>
+            <select id="filterGuests" class="filter-select">
+                <option value="0">Любое кол-во</option>
+                <option value="4">до 4 гостей</option>
+                <option value="8">до 8 гостей</option>
+                <option value="12">до 12+ гостей</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label><i class="fas fa-dollar-sign"></i> Цена за день</label>
+            <select id="filterPrice" class="filter-select">
+                <option value="0">Любая цена</option>
+                <option value="500">до 500$</option>
+                <option value="1000">до 1000$</option>
+                <option value="3000">до 3000$</option>
+            </select>
+        </div>
+        <button class="apply-filters" id="applyFiltersBtn"><i class="fas fa-search"></i> Подобрать яхту</button>
+        <button class="reset-filters" id="resetFiltersBtn"><i class="fas fa-undo-alt"></i> Сброс</button>
+    </div>
+</div>
+
+<!-- каталог -->
+<div class="yacht-catalog">
+    <div class="section-badge">
+        <h2><i class="fas fa-water"></i> Доступные суда</h2>
+        <div class="result-count" id="resultCount">Загрузка...</div>
+    </div>
+    <div id="yachtsGridContainer" class="yacht-grid">
+        <!-- динамически -->
+    </div>
+</div>
+
+<footer>
+    <p>© 2025 SeaRent — яхтенный сервис №1. Надёжное бронирование</p>
+</footer>
+
+<!-- модальное окно бронирования -->
+<div id="bookingModal" class="modal">
+    <div class="modal-card">
+        <span class="close-modal" id="closeModalBtn">&times;</span>
+        <h3><i class="fas fa-anchor"></i> Бронирование яхты</h3>
+        <div id="modalYachtInfo" class="booking-summary"></div>
+        <form id="bookingForm" class="form-modal">
+            <input type="text" id="guestName" placeholder="Ваше полное имя" required>
+            <input type="email" id="guestEmail" placeholder="Email для подтверждения" required>
+            <input type="tel" id="guestPhone" placeholder="Телефон">
+            <textarea rows="2" id="specialRequest" placeholder="Особые пожелания (питание, трансфер и т.д.)"></textarea>
+            <button type="submit" class="confirm-btn"><i class="fas fa-check-circle"></i> Забронировать сейчас</button>
+        </form>
+        <p style="font-size:12px; margin-top:12px; color:gray;">Нажимая кнопку, вы соглашаетесь с условиями аренды.</p>
+    </div>
+</div>
+
+<div id="toastMessage" class="toast-msg"><i class="fas fa-check-circle"></i> <span id="toastText"></span></div>
+
+<script>
+    // ------------------------------------------------------------------
+    // БАЗА ДАННЫХ ЯХТ (15+ вариантов с разнообразными параметрами)
+    // ------------------------------------------------------------------
+    const yachtsData = [
+        { id: 1, name: "Oceanis 38", type: "Парусная", location: "Сочи", capacity: 6, pricePerDay: 450, image: "https://images.unsplash.com/photo-1551893478-d726e2ab5e3f?w=600&auto=format", tag: "Популярный", guestsMax:6 },
+        { id: 2, name: "Azimut 50", type: "Моторная", location: "Сочи", capacity: 10, pricePerDay: 1200, image: "https://images.unsplash.com/photo-1569267760528-33405d6c9751?w=600&auto=format", tag: "Премиум", guestsMax:10 },
+        { id: 3, name: "Lagoon 450", type: "Катамаран", location: "Хорватия", capacity: 12, pricePerDay: 950, image: "https://images.unsplash.com/photo-1528981253803-e40dee9cab1f?w=600&auto=format", tag: "Семейный", guestsMax:12 },
+        { id: 4, name: "Sunseeker Predator", type: "Люкс", location: "Греция", capacity: 8, pricePerDay: 2200, image: "https://images.unsplash.com/photo-1616424304381-8ebf0d6509cd?w=600&auto=format", tag: "VIP стиль", guestsMax:8 },
+        { id: 5, name: "Sea Ray 320", type: "Катер", location: "Тайланд", capacity: 4, pricePerDay: 320, image: "https://images.unsplash.com/photo-1590106541821-042df339baf5?w=600&auto=format", tag: "Быстрый старт", guestsMax:4 },
+        { id: 6, name: "Beneteau Swift Trawler", type: "Моторная", location: "Карибы", capacity: 8, pricePerDay: 780, image: "https://images.unsplash.com/photo-1571068776236-8dd7924fcf09?w=600&auto=format", tag: "Дальние переходы", guestsMax:8 },
+        { id: 7, name: "Fountaine Pajot", type: "Катамаран", location: "Греция", capacity: 10, pricePerDay: 880, image: "https://images.unsplash.com/photo-1544919982-b1b39a4ca254?w=600&auto=format", tag: "Море удовольствия", guestsMax:10 },
+        { id: 8, name: "Riva 76", type: "Люкс", location: "Хорватия", capacity: 12, pricePerDay: 3500, image: "https://images.unsplash.com/photo-1605281317010-fe54b1848a15?w=600&auto=format", tag: "Итальянская классика", guestsMax:12 },
+        { id: 9, name: "Bavaria Cruiser 46", type: "Парусная", location: "Тайланд", capacity: 8, pricePerDay: 590, image: "https://images.unsplash.com/photo-1584163710062-3d5b38dddfe1?w=600&auto=format", tag: "Романтика", guestsMax:8 },
+        { id: 10, name: "Galeon 500", type: "Моторная", location: "Карибы", capacity: 12, pricePerDay: 1500, image: "https://images.unsplash.com/photo-1596179875762-5315b3c200b1?w=600&auto=format", tag: "Просторная", guestsMax:12 },
+        { id: 11, name: "Nord Star 31", type: "Катер", location: "Сочи", capacity: 5, pricePerDay: 380, image: "https://images.unsplash.com/photo-1599586120421-482bbbd887f9?w=600&auto=format", tag: "Рыбалка", guestsMax:5 },
+        { id: 12, name: "Catamaran Bali 4.8", type: "Катамаран", location: "Греция", capacity: 10, pricePerDay: 1090, image: "https://images.unsplash.com/photo-1544551763-46a13bb0d1c2?w=600&auto=format", tag: "Роскошь", guestsMax:10 },
+        { id: 13, name: "Princess V58", type: "Люкс", location: "Хорватия", capacity: 8, pricePerDay: 2100, image: "https://images.unsplash.com/photo-1537970676814-f7d54ca459cc?w=600&auto=format", tag: "Эксклюзив", guestsMax:8 },
+        { id: 14, name: "Jeanneau 54", type: "Парусная", location: "Тайланд", capacity: 8, pricePerDay: 670, image: "https://images.unsplash.com/photo-1512551558242-b5c5d0c09386?w=600&auto=format", tag: "Комфорт", guestsMax:8 },
+        { id: 15, name: "Sunseeker Manhattan 52", type: "Моторная", location: "Карибы", capacity: 10, pricePerDay: 1800, image: "https://images.unsplash.com/photo-1602618082288-1f4d69e09ca0?w=600&auto=format", tag: "Суперяхта", guestsMax:10 }
+    ];
+
+    let currentFiltered = [...yachtsData];
+    let selectedYachtForBooking = null;
+
+    // helpers
+    function formatPrice(price) {
+        return price.toLocaleString() + "$";
+    }
+
+    function getGuestText(capacity) {
+        if(capacity <= 4) return "до 4 гостей";
+        if(capacity <= 8) return "до 8 гостей";
+        return "до 12+ гостей";
+    }
+
+    function renderYachts(yachts) {
+        const container = document.getElementById('yachtsGridContainer');
+        const countSpan = document.getElementById('resultCount');
+        if(!container) return;
+        if(!yachts.length) {
+            container.innerHTML = `<div class="no-results"><i class="fas fa-ship fa-3x" style="color:var(--primary);"></i><h3>По вашему запросу яхт не найдено</h3><p>Попробуйте изменить параметры поиска</p></div>`;
+            countSpan.innerText = "0 яхт";
+            return;
+        }
+        countSpan.innerText = `${yachts.length} яхт${yachts.length%10===1 && yachts.length!==11 ? "а" : ""}`;
+        container.innerHTML = yachts.map(yacht => `
+            <div class="yacht-card" data-id="${yacht.id}">
+                <div class="yacht-img-wrapper">
+                    <img class="yacht-img" src="${yacht.image}" alt="${yacht.name}" loading="lazy">
+                    <div class="yacht-badge">${yacht.tag || "🔥 Акция"}</div>
+                </div>
+                <div class="yacht-info">
+                    <div class="yacht-name">${yacht.name}</div>
+                    <div class="yacht-location"><i class="fas fa-map-pin"></i> ${yacht.location}</div>
+                    <div class="specs">
+                        <span><i class="fas fa-ship"></i> ${yacht.type}</span>
+                        <span><i class="fas fa-user-friends"></i> до ${yacht.capacity} гостей</span>
+                        <span><i class="fas fa-clock"></i> 1 день</span>
+                    </div>
+                    <div class="price-row">
+                        <div class="price">${formatPrice(yacht.pricePerDay)}<small> / день</small></div>
+                        <button class="book-btn" data-id="${yacht.id}">Забронировать <i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        // обработчики для кнопок бронирования
+        document.querySelectorAll('.book-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = parseInt(btn.getAttribute('data-id'));
+                const yacht = yachtsData.find(y => y.id === id);
+                if(yacht) openBookingModal(yacht);
+            });
+        });
+    }
+
+    // фильтрация по всем критериям
+    function applyFilters() {
+        const locationVal = document.getElementById('filterLocation').value;
+        const typeVal = document.getElementById('filterType').value;
+        const guestsVal = parseInt(document.getElementById('filterGuests').value);
+        const priceLimit = parseInt(document.getElementById('filterPrice').value);
+
+        let filtered = [...yachtsData];
+
+        if(locationVal !== 'all') {
+            filtered = filtered.filter(y => y.location === locationVal);
+        }
+        if(typeVal !== 'all') {
+            filtered = filtered.filter(y => y.type === typeVal);
+        }
+        if(guestsVal > 0) {
+            filtered = filtered.filter(y => y.capacity <= guestsVal);
+        }
+        if(priceLimit > 0) {
+            filtered = filtered.filter(y => y.pricePerDay <= priceLimit);
+        }
+        currentFiltered = filtered;
+        renderYachts(currentFiltered);
+    }
+
+    function resetFilters() {
+        document.getElementById('filterLocation').value = 'all';
+        document.getElementById('filterType').value = 'all';
+        document.getElementById('filterGuests').value = '0';
+        document.getElementById('filterPrice').value = '0';
+        applyFilters();
+    }
+
+    // модалка бронирования
+    const modal = document.getElementById('bookingModal');
+    const modalYachtInfo = document.getElementById('modalYachtInfo');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const bookingForm = document.getElementById('bookingForm');
+
+    function openBookingModal(yacht) {
+        selectedYachtForBooking = yacht;
+        modalYachtInfo.innerHTML = `
+            <strong>${yacht.name}</strong> (${yacht.type})<br>
+            📍 ${yacht.location} | 👥 до ${yacht.capacity} гостей<br>
+            💰 ${formatPrice(yacht.pricePerDay)} / сутки<br>
+            <small style="color:green;">✓ Включена страховка, поддержка капитана</small>
+        `;
+        modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+        bookingForm.reset();
+        selectedYachtForBooking = null;
+    }
+
+    function showToast(message, isError = false) {
+        const toast = document.getElementById('toastMessage');
+        const toastText = document.getElementById('toastText');
+        toastText.innerText = message;
+        toast.style.display = 'flex';
+        if(isError) toast.style.background = '#e74c3c';
+        else toast.style.background = '#2ecc71';
+        setTimeout(() => {
+            toast.style.display = 'none';
+            toast.style.background = '#0a3d62';
+        }, 3000);
+    }
+
+    bookingForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if(!selectedYachtForBooking) {
+            showToast("Ошибка: выберите яхту", true);
+            return;
+        }
+        const name = document.getElementById('guestName').value.trim();
+        const email = document.getElementById('guestEmail').value.trim();
+        if(!name || !email) {
+            showToast("Пожалуйста, укажите имя и email", true);
+            return;
+        }
+        // эмуляция бронирования
+        showToast(`✅ ${selectedYachtForBooking.name} успешно забронирована! Подтверждение отправлено на ${email}`);
+        closeModal();
+        // дополнительно можно сохранить в localStorage, но достаточно уведомления
+    });
+
+    closeModalBtn.addEventListener('click', closeModal);
+    window.addEventListener('click', (e) => {
+        if(e.target === modal) closeModal();
+    });
+
+    // обработчики кнопок фильтра
+    document.getElementById('applyFiltersBtn').addEventListener('click', applyFilters);
+    document.getElementById('resetFiltersBtn').addEventListener('click', resetFilters);
+
+    // загрузка страницы: отображение всех яхт + изначальный поиск по URL-параметрам, если перешли с главной?
+    function init() {
+        renderYachts(yachtsData);
+        // дополнительно: можно проверить переданные через localStorage или параметры, но стандартно просто показываем весь каталог
+        const urlParams = new URLSearchParams(window.location.search);
+        const preLocation = urlParams.get('location');
+        if(preLocation && preLocation !== '') {
+            if(['Сочи','Хорватия','Греция','Тайланд','Карибы'].includes(preLocation)) {
+                document.getElementById('filterLocation').value = preLocation;
+                applyFilters();
+            }
+        } else {
+            // если параметров нет, показываем полный список
+            currentFiltered = [...yachtsData];
+            renderYachts(currentFiltered);
+        }
+    }
+
+    init();
+</script>
+</body>
+</html>
