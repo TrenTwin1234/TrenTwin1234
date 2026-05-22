@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeaRent — Стать партнёром | Аренда яхт и катеров</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+        }
+
+        :root {
+            --primary: #1a6bb3;
+            --primary-dark: #0e4b7f;
+            --secondary: #0a3d62;
+            --accent: #ffb142;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gray: #5d6f7f;
+            --gray-light: #eef2f5;
+            --success: #2ecc71;
+            --error: #e74c3c;
+            --shadow-sm: 0 5px 20px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 30px rgba(0,0,0,0.08);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.12);
+            --radius: 16px;
+            --radius-md: 12px;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e6edf4 100%);
+            color: var(--dark);
+        }
+
+        /* Header */
+        .partner-header {
+            background: linear-gradient(135deg, var(--secondary) 0%, #0f4c6b 100%);
+            color: white;
+            padding: 1.2rem 2rem;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .back-home {
+            background: rgba(255,255,255,0.15);
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .back-home:hover {
+            background: var(--accent);
+            color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Hero partner */
+        .partner-hero {
+            background: linear-gradient(rgba(10, 61, 98, 0.85), rgba(26, 107, 179, 0.85)), url('https://images.unsplash.com/photo-1569267760528-33405d6c9751?w=1600&auto=format');
+            background-size: cover;
+            background-position: center 40%;
+            padding: 5rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .partner-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .partner-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: rgba(255,255,255,0.95);
+        }
+
+        /* преимущества партнера */
+        .benefits-section {
+            max-width: 1300px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--secondary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 4px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .benefit-icon {
+            background: var(--primary);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .benefit-card h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        /* форма регистрации */
+        .partner-form-section {
+            background: white;
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        .partner-form-section h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .form-subtitle {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26,107,179,0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+        }
+
+        .submit-partner-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-partner-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* faq */
+        .faq-section {
+            max-width: 1100px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .faq-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 1.2rem 1.5rem;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: var(--gray);
+            padding-top: 0;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding-top: 1rem;
+        }
+
+        .faq-item i {
+            transition: transform 0.2s;
+        }
+
+        .faq-item.active i {
+            transform: rotate(180deg);
+        }
+
+        footer {
+            background: var(--secondary);
+            color: rgba(255,255,255,0.8);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--success);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 500;
+            z-index: 3000;
+            box-shadow: var(--shadow-md);
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .partner-hero h1 { font-size: 2rem; }
+            .partner-form-section { margin: 2rem 1rem; padding: 1.5rem; }
+            .form-row { flex-direction: column; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="partner-header">
+    <div class="header-container">
+        <div class="logo" onclick="window.location.href='index.html'">
+            <i class="fas fa-ship"></i> <span>SeaRent</span>
+        </div>
+        <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> На главную</a>
+    </div>
+</div>
+
+<div class="partner-hero">
+    <h1>Присоединяйтесь к SeaRent как владелец яхты</h1>
+    <p>Зарабатывайте на аренде вашего судна — от 15 000$ в месяц, полная юридическая поддержка и страховка</p>
+</div>
+
+<section class="benefits-section">
+    <div class="section-title">
+        <h2>Почему владельцы выбирают нас</h2>
+    </div>
+    <div class="benefits-grid">
+        <div class="benefit-card">
+            <div class="benefit-icon"><i class="fas fa-chart-line"></i></div>
+            <h3>Высокая доходность</h3>
+            <p>Загрузка яхт до 85% в сезон. Стабильные выплаты, комиссия платформы всего 12%.</p>
+        </div>
+        <div class="benefit-card">
+            <div class="benefit-icon"><i class="fas fa-shield-alt"></i></div>
+            <h3>Полная страховка</h3>
+            <p>Ваше судно застраховано на время аренды. Покрываем ущерб и берем на себя ответственность.</p>
+        </div>
+        <div class="benefit-card">
+            <div class="benefit-icon"><i class="fas fa-calendar-check"></i></div>
+            <h3>Интеллектуальный календарь</h3>
+            <p>Управляйте бронированиями через личный кабинет, синхронизация с вашим графиком.</p>
+        </div>
+        <div class="benefit-card">
+            <div class="benefit-icon"><i class="fas fa-headset"></i></div>
+            <h3>Персональный менеджер</h3>
+            <p>Помощь в подготовке судна, профессиональные фото и продвижение вашей яхты.</p>
+        </div>
+    </div>
+</section>
+
+<div class="partner-form-section">
+    <h2>Стать партнёром SeaRent</h2>
+    <div class="form-subtitle">Заполните анкету — и наш менеджер свяжется с вами в течение 24 часов</div>
+    
+    <form id="partnerForm">
+        <div class="form-row">
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Имя и фамилия *</label>
+                <input type="text" id="ownerName" class="form-control" placeholder="Александр Петров" required>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Email *</label>
+                <input type="email" id="ownerEmail" class="form-control" placeholder="owner@example.com" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label><i class="fas fa-phone-alt"></i> Телефон *</label>
+                <input type="tel" id="ownerPhone" class="form-control" placeholder="+7 (900) 123-45-67" required>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-ship"></i> Название / модель яхты *</label>
+                <input type="text" id="yachtModel" class="form-control" placeholder="Azimut 55, Bavaria 46..." required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label><i class="fas fa-map-marker-alt"></i> Базирование (порт) *</label>
+                <input type="text" id="baseLocation" class="form-control" placeholder="Сочи / Хорватия / Греция" required>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-ruler-combined"></i> Длина / Год выпуска</label>
+                <input type="text" id="specs" class="form-control" placeholder="14м, 2021">
+            </div>
+        </div>
+        <div class="form-group">
+            <label><i class="fas fa-info-circle"></i> Дополнительная информация о судне</label>
+            <textarea id="yachtInfo" rows="3" class="form-control" placeholder="Количество кают, кондиционеры, оборудование, услуги капитана..."></textarea>
+        </div>
+        <button type="submit" class="submit-partner-btn"><i class="fas fa-handshake"></i> Отправить заявку</button>
+        <p style="font-size: 12px; text-align: center; margin-top: 1.5rem; color: var(--gray);">Нажимая кнопку, вы соглашаетесь с условиями партнёрского договора и политикой конфиденциальности.</p>
+    </form>
+</div>
+
+<section class="faq-section">
+    <div class="section-title">
+        <h2>Часто задаваемые вопросы</h2>
+    </div>
+    <div class="faq-grid">
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Как я получу оплату за аренду моей яхты?</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">Мы переводим средства на ваш банковский счёт или карту дважды в месяц после завершения каждой аренды. Все платежи защищены.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Кто отвечает за повреждения яхты?</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">Каждая аренда включает полное каско и страховку ответственности арендатора. Мы покрываем 100% ущерба при соблюдении правил.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Могу ли я сам решать, когда сдавать яхту?</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">Да, вы управляете календарём в личном кабинете: блокируйте личные выходы и устанавливайте собственный график доступности.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Бесплатная ли регистрация и размещение?</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">Абсолютно бесплатно. Комиссия взимается только с успешных бронирований — прозрачно и честно.</div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2025 SeaRent — партнёрская программа для владельцев яхт и катеров</p>
+    <p style="font-size:0.8rem; margin-top:8px;">Присоединяйтесь к сообществу успешных рантье</p>
+</footer>
+
+<div id="toastMessage" class="toast-msg"><i class="fas fa-check-circle"></i> <span id="toastText"></span></div>
+
+<script>
+    // FAQ аккордеон
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        item.addEventListener('click', () => {
+            item.classList.toggle('active');
+        });
+    });
+
+    // обработка формы партнера
+    const partnerForm = document.getElementById('partnerForm');
+    const toast = document.getElementById('toastMessage');
+    const toastText = document.getElementById('toastText');
+
+    function showToast(message, isError = false) {
+        toastText.innerText = message;
+        toast.style.display = 'flex';
+        if (isError) {
+            toast.style.background = '#e74c3c';
+        } else {
+            toast.style.background = '#2ecc71';
+        }
+        setTimeout(() => {
+            toast.style.display = 'none';
+            toast.style.background = '#2ecc71';
+        }, 3500);
+    }
+
+    partnerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('ownerName').value.trim();
+        const email = document.getElementById('ownerEmail').value.trim();
+        const phone = document.getElementById('ownerPhone').value.trim();
+        const yachtModel = document.getElementById('yachtModel').value.trim();
+        const location = document.getElementById('baseLocation').value.trim();
+        
+        if (!name || !email || !phone || !yachtModel || !location) {
+            showToast("Пожалуйста, заполните все обязательные поля (*)", true);
+            return;
+        }
+        
+        if (!email.includes('@') || !email.includes('.')) {
+            showToast("Введите корректный email", true);
+            return;
+        }
+        
+        // имитация отправки данных на сервер
+        console.log({ name, email, phone, yachtModel, location });
+        
+        showToast(`✅ Спасибо, ${name}! Ваша заявка принята. Менеджер свяжется в ближайшее время.`);
+        partnerForm.reset();
+        
+        // опционально: сохранить в localStorage для демо
+        localStorage.setItem('partnerRequest', JSON.stringify({ name, email, phone, yachtModel, location, date: new Date() }));
+    });
+</script>
+</body>
+</html>
